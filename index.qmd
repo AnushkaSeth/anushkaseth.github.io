@@ -1,7 +1,10 @@
 ---
 title: "Anushka Seth"
+about:
+  template: jolla
+  image: images/profile.jpg
+
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Hi there! I am currently a Master of Data Science (MDS) student at the University of British Columbia, based in beautiful Vancouver. 
+Prior to joining UBC, I spent five years working as a Data and AI Consultant at Microsoft, where I gained hands-on experience building enterprise data pipelines and AI solutions. With a background in Computer Science, I joined the MDS program to further sharpen my technical foundation, deepen my data science expertise, and explore new tools and methods in the field.

@@ -1,0 +1,6 @@
+---
+title: "My first weeks in MDS"
+author: "Anushka Seth"
+date: 2026-09-10
+---
+![Orientation day on campus.](orientation.jpg)
