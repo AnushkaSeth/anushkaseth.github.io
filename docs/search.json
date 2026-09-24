@@ -7,11 +7,11 @@
     "text": "Orientation day on campus."
   },
   {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Blog",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Anushka Seth",
     "section": "",
-    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 10, 2026\n\n\nAnushka Seth\n\n\n\n\n\nNo matching items"
+    "text": "Hi there! I am currently a Master of Data Science (MDS) student at the University of British Columbia, based in beautiful Vancouver. Prior to joining UBC, I spent five years working as a Data and AI Consultant at Microsoft, where I gained hands-on experience building enterprise data pipelines and AI solutions. With a background in Computer Science, I joined the MDS program to further sharpen my technical foundation, deepen my data science expertise, and explore new tools and methods in the field."
   },
   {
     "objectID": "about.html",
@@ -42,10 +42,38 @@
     "text": "Outside of data science\nWhen I’m not immersed in code and statistical models, you’ll usually find me exploring my creative and active sides. I’m a passionate painter and love creating art, whether I’m sketching or working with acrylics. On weekends, I balance quiet time with movement—you’ll often find me reading novels, hitting the badminton court for a fast-paced game, or exploring new spots as an enthusiastic foodie who loves trying cuisines from all over the world. To unwind through it all, I love playing classic Indian music in the background."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Anushka Seth",
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
     "section": "",
-    "text": "Hi there! I am currently a Master of Data Science (MDS) student at the University of British Columbia, based in beautiful Vancouver. Prior to joining UBC, I spent five years working as a Data and AI Consultant at Microsoft, where I gained hands-on experience building enterprise data pipelines and AI solutions. With a background in Computer Science, I joined the MDS program to further sharpen my technical foundation, deepen my data science expertise, and explore new tools and methods in the field."
+    "text": "Milestone 3 - Python Computational Post\n\n\n\n\n\n\n\n\nSep 22, 2026\n\n\nAnushka Seth\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 10, 2026\n\n\nAnushka Seth\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/comp1/index.html",
+    "href": "posts/comp1/index.html",
+    "title": "Milestone 3 - Python Computational Post",
+    "section": "",
+    "text": "from palmerpenguins import load_penguins\nimport matplotlib.pyplot as plt\nimport seaborn as sns"
+  },
+  {
+    "objectID": "posts/comp1/index.html#load-palmerpenguins-dataset",
+    "href": "posts/comp1/index.html#load-palmerpenguins-dataset",
+    "title": "Milestone 3 - Python Computational Post",
+    "section": "Load Palmerpenguins dataset",
+    "text": "Load Palmerpenguins dataset\nThe official site of palmerpenguin dataset can be found here - https://allisonhorst.github.io/palmerpenguins/ ### About the data Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. The palmerpenguins package contains two datasets - penguins and penguins_raw\n\n# Load the clean dataset\npenguins = load_penguins().dropna()\n# Display the first few rows\nprint(penguins.head())\n\n  species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \\\n0  Adelie  Torgersen            39.1           18.7              181.0   \n1  Adelie  Torgersen            39.5           17.4              186.0   \n2  Adelie  Torgersen            40.3           18.0              195.0   \n4  Adelie  Torgersen            36.7           19.3              193.0   \n5  Adelie  Torgersen            39.3           20.6              190.0   \n\n   body_mass_g     sex  year  \n0       3750.0    male  2007  \n1       3800.0  female  2007  \n2       3250.0  female  2007  \n4       3450.0  female  2007  \n5       3650.0    male  2007"
+  },
+  {
+    "objectID": "posts/comp1/index.html#uncovering-simpsons-paradox",
+    "href": "posts/comp1/index.html#uncovering-simpsons-paradox",
+    "title": "Milestone 3 - Python Computational Post",
+    "section": "Uncovering Simpson’s Paradox",
+    "text": "Uncovering Simpson’s Paradox\nThis computation calculates the correlation between bill length and bill depth. When evaluated altogether, the variables appear negatively correlated. However, when split by species, they are highly positively correlated—a classic statistical phenomenon known as Simpson’s Paradox.\n\nprint(f\"Overall Correlation: {penguins['bill_length_mm'].corr(penguins['bill_depth_mm']):.2f}\")\nfor species, group in penguins.groupby('species'):\n    spec_corr = group['bill_length_mm'].corr(group['bill_depth_mm'])\n    print(f\"{species} Correlation: {spec_corr:.2f}\")\n\n\nOverall Correlation: -0.23\nAdelie Correlation: 0.39\nChinstrap Correlation: 0.65\nGentoo Correlation: 0.65\n\n\n\n# Graph the paradox\nsns.lmplot(data=penguins, x=\"bill_length_mm\", y=\"bill_depth_mm\", hue=\"species\", palette=\"Set2\")\nplt.title(\"Simpson's Paradox: Penguin Bill Dimensions\")\nplt.xlabel(\"Bill Length (mm)\")\nplt.ylabel(\"Bill Depth (mm)\")\nplt.show()"
+  },
+  {
+    "objectID": "posts/comp1/index.html#the-body-condition-index",
+    "href": "posts/comp1/index.html#the-body-condition-index",
+    "title": "Milestone 3 - Python Computational Post",
+    "section": "The “Body Condition Index",
+    "text": "The “Body Condition Index\nThis block constructs a custom engineering metric: a Body Condition Index (BCI). BCI calculates how many grams of body mass a penguin carries per millimeter of flipper length, highlighting which species and sex are the most robustly built relative to their frame.\n\npenguins['bci'] = penguins['body_mass_g'] / penguins['flipper_length_mm']\n\n# Rank profiles by demographic subgroup\nbci_profile = penguins.groupby(['species', 'sex'])['bci'].mean().reset_index()\nprint(bci_profile.sort_values(by='bci', ascending=False))\n\n     species     sex        bci\n5     Gentoo    male  24.762056\n4     Gentoo  female  21.996526\n1     Adelie    male  21.017003\n3  Chinstrap    male  19.685535\n2  Chinstrap  female  18.401982\n0     Adelie  female  17.943739\n\n\n\n# Graph the distribution profile\nplt.figure(figsize=(8, 5))\nsns.boxplot(data=penguins, x=\"species\", y=\"bci\", hue=\"sex\", palette=\"Pastel1\")\nplt.title(\"Penguin Body Condition Profile (Mass / Flipper Ratio)\")\nplt.xlabel(\"Species\")\nplt.ylabel(\"BCI (g / mm)\")\nplt.show()\n\n\n\n\n\n\n\n\n\nWhat we did: We loaded the dataset using the standalone package and analyzed how penguin body parts scale together.\nFinding 1 (Simpson’s Paradox): If you mix all penguins together, bills look like they get flatter as they get longer. But when looked at species by species, bills actually get longer and deeper together.\nFinding 2 (Body Condition): We calculated weight relative to wing size. We found that Gentoo penguins are the most robustly built species, and males are consistently bulkier than females across all species."
   }
 ]
