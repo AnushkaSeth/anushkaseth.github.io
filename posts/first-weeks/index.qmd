@@ -4,3 +4,15 @@ author: "Anushka Seth"
 date: 2026-09-10
 ---
 ![Orientation day on campus.](orientation.jpg)
+
+### My UBC Master of Data Science Orientation Experience
+
+From **August 26 to August 28**, I had the opportunity to attend the UBC Master of Data Science (MDS) Orientation. It was an exciting few days filled with learning, new experiences, and meeting people who will be part of my journey at UBC.
+
+During orientation, I got a better understanding of what the program will look like, including the **course structure, timelines, expectations, and what to prepare for in the coming months**. One of the highlights was learning more about the **capstone projects**, which gave me a glimpse into how we will apply the knowledge and skills we develop throughout the program to real-world problems.
+
+Beyond the academic sessions, orientation was a great opportunity to **make connections and build a community**. I got to meet my fellow MDS students, make new friends, and connect with MDS alumni who shared their experiences and insights about the program.
+
+And, of course, one of the most memorable moments was **winning the Campus Goose Chase!**  It was a fun way to explore campus, work together, and create some great memories right from the beginning of my UBC journey.
+
+Overall, the three days gave me a clearer picture of what lies ahead and made me even more excited to begin this new chapter as a UBC MDS student. I’m looking forward to learning, growing, and making many more memories along the way!

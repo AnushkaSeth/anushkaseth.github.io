@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Anushka Seth">
-<meta name="dcterms.date" content="2026-09-22">
+<meta name="dcterms.date" content="2026-09-24">
 
-<title>Milestone 3 - Python Computational Post – Anushka Seth</title>
+<title>Milestone 3 - R Computational Post – Anushka Seth</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -161,8 +161,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#load-palmerpenguins-dataset" id="toc-load-palmerpenguins-dataset" class="nav-link active" data-scroll-target="#load-palmerpenguins-dataset">Load Palmerpenguins dataset</a></li>
-  <li><a href="#uncovering-simpsons-paradox" id="toc-uncovering-simpsons-paradox" class="nav-link" data-scroll-target="#uncovering-simpsons-paradox">Uncovering Simpson’s Paradox</a></li>
-  <li><a href="#the-body-condition-index" id="toc-the-body-condition-index" class="nav-link" data-scroll-target="#the-body-condition-index">The “Body Condition Index</a></li>
+  <li><a href="#simpsons-paradox" id="toc-simpsons-paradox" class="nav-link" data-scroll-target="#simpsons-paradox">Simpson’s Paradox</a>
+  <ul class="collapse">
+  <li><a href="#overall-correlation" id="toc-overall-correlation" class="nav-link" data-scroll-target="#overall-correlation">Overall Correlation</a></li>
+  <li><a href="#correlation-within-each-species" id="toc-correlation-within-each-species" class="nav-link" data-scroll-target="#correlation-within-each-species">Correlation within each species</a></li>
+  <li><a href="#plotting-simpsons-paradox" id="toc-plotting-simpsons-paradox" class="nav-link" data-scroll-target="#plotting-simpsons-paradox">Plotting Simpson’s paradox</a></li>
+  </ul></li>
+  <li><a href="#the-body-condition-index" id="toc-the-body-condition-index" class="nav-link" data-scroll-target="#the-body-condition-index">The Body Condition Index</a>
+  <ul class="collapse">
+  <li><a href="#create-bci-column" id="toc-create-bci-column" class="nav-link" data-scroll-target="#create-bci-column">Create BCI column</a></li>
+  <li><a href="#calculate-bci-by-species-and-sex-with-ranks" id="toc-calculate-bci-by-species-and-sex-with-ranks" class="nav-link" data-scroll-target="#calculate-bci-by-species-and-sex-with-ranks">Calculate BCI by species and sex with ranks</a></li>
+  <li><a href="#plot-the-body-condition-index" id="toc-plot-the-body-condition-index" class="nav-link" data-scroll-target="#plot-the-body-condition-index">Plot the Body Condition Index</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -171,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Milestone 3 - Python Computational Post</h1>
+<h1 class="title">Milestone 3 - R Computational Post</h1>
 </div>
 
 
@@ -188,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 22, 2026</p>
+      <p class="date">September 24, 2026</p>
     </div>
   </div>
   
@@ -200,110 +210,186 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="8e13949c-3ed5-4684-bf0c-02812f318e78" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 <section id="load-palmerpenguins-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="load-palmerpenguins-dataset">Load Palmerpenguins dataset</h2>
-<p>Data: <a href="https://allisonhorst.github.io/palmerpenguins/">Palmer Penguins</a>, Palmer Station Antarctica LTER. ### About the data Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. The palmerpenguins package contains two datasets - <em>penguins</em> and <em>penguins_raw</em></p>
-<div id="a48a424b-8272-4ee0-8a43-86e374f12ee7" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the clean dataset</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> load_penguins().dropna()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(penguins.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Data: <a href="https://allisonhorst.github.io/palmerpenguins/">Palmer Penguins</a>, Palmer Station Antarctica LTER.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> penguins</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="simpsons-paradox" class="level2">
+<h2 class="anchored" data-anchor-id="simpsons-paradox">Simpson’s Paradox</h2>
+<section id="overall-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="overall-correlation">Overall Correlation</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>overall_corr <span class="ot">&lt;-</span> <span class="fu">cor</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  penguins<span class="sc">$</span>bill_length_mm,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  penguins<span class="sc">$</span>bill_depth_mm,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">use =</span> <span class="st">"complete.obs"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(overall_corr, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \
-0  Adelie  Torgersen            39.1           18.7              181.0   
-1  Adelie  Torgersen            39.5           17.4              186.0   
-2  Adelie  Torgersen            40.3           18.0              195.0   
-4  Adelie  Torgersen            36.7           19.3              193.0   
-5  Adelie  Torgersen            39.3           20.6              190.0   
-
-   body_mass_g     sex  year  
-0       3750.0    male  2007  
-1       3800.0  female  2007  
-2       3250.0  female  2007  
-4       3450.0  female  2007  
-5       3650.0    male  2007  </code></pre>
+<pre><code>[1] -0.24</code></pre>
 </div>
 </div>
 </section>
-<section id="uncovering-simpsons-paradox" class="level2">
-<h2 class="anchored" data-anchor-id="uncovering-simpsons-paradox">Uncovering Simpson’s Paradox</h2>
-<p>This computation calculates the correlation between bill length and bill depth. When evaluated altogether, the variables appear negatively correlated. However, when split by species, they are highly positively correlated—a classic statistical phenomenon known as Simpson’s Paradox.</p>
-<div id="fb30401c-dbeb-481e-9bb7-bde71bc05c3b" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Overall Correlation: </span><span class="sc">{</span>penguins[<span class="st">'bill_length_mm'</span>]<span class="sc">.</span>corr(penguins[<span class="st">'bill_depth_mm'</span>])<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> species, group <span class="kw">in</span> penguins.groupby(<span class="st">'species'</span>):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    spec_corr <span class="op">=</span> group[<span class="st">'bill_length_mm'</span>].corr(group[<span class="st">'bill_depth_mm'</span>])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>species<span class="sc">}</span><span class="ss"> Correlation: </span><span class="sc">{</span>spec_corr<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="correlation-within-each-species" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-within-each-species">Correlation within each species</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">correlation =</span> <span class="fu">round</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cor</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        bill_length_mm,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        bill_depth_mm,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">use =</span> <span class="st">"complete.obs"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="dv">2</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overall Correlation: -0.23
-Adelie Correlation: 0.39
-Chinstrap Correlation: 0.65
-Gentoo Correlation: 0.65</code></pre>
+<pre><code># A tibble: 3 × 2
+  species   correlation
+  &lt;fct&gt;           &lt;dbl&gt;
+1 Adelie           0.39
+2 Chinstrap        0.65
+3 Gentoo           0.64</code></pre>
 </div>
 </div>
-<div id="9e70097c-6894-4656-98ca-e5c63f4302f1" class="cell" data-scrolled="true" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph the paradox</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(data<span class="op">=</span>penguins, x<span class="op">=</span><span class="st">"bill_length_mm"</span>, y<span class="op">=</span><span class="st">"bill_depth_mm"</span>, hue<span class="op">=</span><span class="st">"species"</span>, palette<span class="op">=</span><span class="st">"Set2"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Simpson's Paradox: Penguin Bill Dimensions"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Bill Depth (mm)"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
+</section>
+<section id="plotting-simpsons-paradox" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-simpsons-paradox">Plotting Simpson’s paradox</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  penguins,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bill_length_mm,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> bill_depth_mm,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> species</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Bill Length vs Bill Depth by Species"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Bill Length (mm)"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Bill Depth (mm)"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Species"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/The Simpson's Paradox-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Bill length vs Bill Depth by Species</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
+</section>
 <section id="the-body-condition-index" class="level2">
-<h2 class="anchored" data-anchor-id="the-body-condition-index">The “Body Condition Index</h2>
-<p>This block constructs a custom engineering metric: a Body Condition Index (BCI). BCI calculates how many grams of body mass a penguin carries per millimeter of flipper length, highlighting which species and sex are the most robustly built relative to their frame.</p>
-<div id="6b058442-0d23-4cf8-8528-ba431fa53c97" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>penguins[<span class="st">'bci'</span>] <span class="op">=</span> penguins[<span class="st">'body_mass_g'</span>] <span class="op">/</span> penguins[<span class="st">'flipper_length_mm'</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank profiles by demographic subgroup</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>bci_profile <span class="op">=</span> penguins.groupby([<span class="st">'species'</span>, <span class="st">'sex'</span>])[<span class="st">'bci'</span>].mean().reset_index()</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bci_profile.sort_values(by<span class="op">=</span><span class="st">'bci'</span>, ascending<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h2 class="anchored" data-anchor-id="the-body-condition-index">The Body Condition Index</h2>
+<section id="create-bci-column" class="level3">
+<h3 class="anchored" data-anchor-id="create-bci-column">Create BCI column</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">bci =</span> body_mass_g <span class="sc">/</span> flipper_length_mm</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    species,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    sex,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    body_mass_g,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    flipper_length_mm,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    bci</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     species     sex        bci
-5     Gentoo    male  24.762056
-4     Gentoo  female  21.996526
-1     Adelie    male  21.017003
-3  Chinstrap    male  19.685535
-2  Chinstrap  female  18.401982
-0     Adelie  female  17.943739</code></pre>
+<pre><code># A tibble: 6 × 5
+  species sex    body_mass_g flipper_length_mm   bci
+  &lt;fct&gt;   &lt;fct&gt;        &lt;int&gt;             &lt;int&gt; &lt;dbl&gt;
+1 Adelie  male          3750               181  20.7
+2 Adelie  female        3800               186  20.4
+3 Adelie  female        3250               195  16.7
+4 Adelie  &lt;NA&gt;            NA                NA  NA  
+5 Adelie  female        3450               193  17.9
+6 Adelie  male          3650               190  19.2</code></pre>
 </div>
 </div>
-<div id="ab8766c1-72d4-4962-95d5-91a0fc982bee" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph the distribution profile</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>penguins, x<span class="op">=</span><span class="st">"species"</span>, y<span class="op">=</span><span class="st">"bci"</span>, hue<span class="op">=</span><span class="st">"sex"</span>, palette<span class="op">=</span><span class="st">"Pastel1"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Penguin Body Condition Profile (Mass / Flipper Ratio)"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"BCI (g / mm)"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
+</section>
+<section id="calculate-bci-by-species-and-sex-with-ranks" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-bci-by-species-and-sex-with-ranks">Calculate BCI by species and sex with ranks</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bci_profile <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">bci =</span> <span class="fu">mean</span>(bci, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>bci_ranked <span class="ot">&lt;-</span> bci_profile <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(bci)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>())</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bci_ranked)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  species   sex      bci  rank
+  &lt;fct&gt;     &lt;fct&gt;  &lt;dbl&gt; &lt;int&gt;
+1 Gentoo    male    24.8     1
+2 Gentoo    female  22.0     2
+3 Gentoo    &lt;NA&gt;    21.3     3
+4 Adelie    male    21.0     4
+5 Chinstrap male    19.7     5
+6 Adelie    &lt;NA&gt;    19.1     6
+7 Chinstrap female  18.4     7
+8 Adelie    female  17.9     8</code></pre>
+</div>
+</div>
+</section>
+<section id="plot-the-body-condition-index" class="level3">
+<h3 class="anchored" data-anchor-id="plot-the-body-condition-index">Plot the Body Condition Index</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  bci_profile,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> species,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> bci,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> sex</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average Body Condition Index by Species and Sex"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Species"</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average BCI"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Sex"</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/The Body Condition's Index-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Average Body Condition Index by Species and Sex</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <ul>
-<li><strong>What we did</strong>: We loaded the dataset using the standalone package and analyzed how penguin body parts scale together.</li>
-<li><strong>Finding 1 (Simpson’s Paradox)</strong>: If you mix all penguins together, bills look like they get flatter as they get longer. But when looked at species by species, bills actually get longer and deeper together.</li>
-<li><strong>Finding 2 (Body Condition)</strong>: We calculated weight relative to wing size. We found that Gentoo penguins are the most robustly built species, and males are consistently bulkier than females across all species.</li>
+<li><p>I calculated the overall correlation between penguin bill length and bill depth and then calculated the correlation separately for each species to examine Simpson’s paradox. The results show that the overall relationship differs from the relationships observed within individual species, demonstrating how grouping by species can change the apparent correlation.</p></li>
+<li><p>I also calculated the Body Condition Index (BCI) as body mass divided by flipper length, then compared the average BCI across species and sex. The BCI results show differences between demographic groups, which are visible in the bar plot.</p></li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

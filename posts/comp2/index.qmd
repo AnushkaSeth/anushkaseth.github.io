@@ -1,0 +1,152 @@
+---
+title: "Milestone 3 - R Computational Post"
+author: "Anushka Seth"
+date: 2026-09-24
+---
+
+## Load Palmerpenguins dataset
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/),
+Palmer Station Antarctica LTER.
+
+
+```{r}
+#| message: false
+#| warning: false
+library(palmerpenguins)
+library(tidyverse)
+library(ggplot2)
+
+penguins <- penguins
+```
+
+## Simpson's Paradox
+
+### Overall Correlation
+
+```{r}
+#| message: false
+#| warning: false
+overall_corr <- cor(
+  penguins$bill_length_mm,
+  penguins$bill_depth_mm,
+  use = "complete.obs"
+)
+
+print(round(overall_corr, 2))
+
+```
+
+### Correlation within each species
+
+```{r}
+#| message: false
+#| warning: false
+penguins %>%
+  group_by(species) %>%
+  summarise(
+    correlation = round(
+      cor(
+        bill_length_mm,
+        bill_depth_mm,
+        use = "complete.obs"
+      ),
+      2
+    )
+  )
+```
+
+### Plotting Simpson's paradox
+
+```{r}
+#| label: The Simpson's Paradox
+#| fig-cap: "Bill length vs Bill Depth by Species"
+#| message: false
+#| warning: false
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    colour = species
+  )
+) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Bill Length vs Bill Depth by Species",
+    x = "Bill Length (mm)",
+    y = "Bill Depth (mm)",
+    colour = "Species"
+  ) +
+  theme_minimal()
+```
+
+## The Body Condition Index
+
+### Create BCI column
+
+```{r}
+#| message: false
+#| warning: false
+penguins <- penguins %>%
+  mutate(
+    bci = body_mass_g / flipper_length_mm
+  )
+penguins %>%
+  select(
+    species,
+    sex,
+    body_mass_g,
+    flipper_length_mm,
+    bci
+  ) %>%
+  head()
+```
+
+### Calculate BCI by species and sex with ranks
+
+```{r}
+#| message: false
+#| warning: false
+bci_profile <- penguins %>%
+  group_by(species, sex) %>%
+  summarise(
+    bci = mean(bci, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+bci_ranked <- bci_profile %>%
+  arrange(desc(bci)) %>%
+  mutate(rank = row_number())
+
+print(bci_ranked)
+```
+
+### Plot the Body Condition Index
+
+```{r}
+#| label: The Body Condition's Index
+#| fig-cap: "Average Body Condition Index by Species and Sex"
+#| message: false
+#| warning: false
+ggplot(
+  bci_profile,
+  aes(
+    x = species,
+    y = bci,
+    fill = sex
+  )
+) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Average Body Condition Index by Species and Sex",
+    x = "Species",
+    y = "Average BCI",
+    fill = "Sex"
+  ) +
+  theme_minimal()
+```
+
+- I calculated the overall correlation between penguin bill length and bill depth and then calculated the correlation separately for each species to examine Simpson’s paradox. The results show that the overall relationship differs from the relationships observed within individual species, demonstrating how grouping by species can change the apparent correlation.
+
+- I also calculated the Body Condition Index (BCI) as body mass divided by flipper length, then compared the average BCI across species and sex. The BCI results show differences between demographic groups, which are visible in the bar plot.
