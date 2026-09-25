@@ -160,7 +160,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#load-palmerpenguins-dataset" id="toc-load-palmerpenguins-dataset" class="nav-link active" data-scroll-target="#load-palmerpenguins-dataset">Load Palmerpenguins dataset</a></li>
+  <li><a href="#load-palmerpenguins-dataset" id="toc-load-palmerpenguins-dataset" class="nav-link active" data-scroll-target="#load-palmerpenguins-dataset">Load Palmerpenguins dataset</a>
+  <ul class="collapse">
+  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link" data-scroll-target="#about-the-data">About the data</a></li>
+  </ul></li>
   <li><a href="#uncovering-simpsons-paradox" id="toc-uncovering-simpsons-paradox" class="nav-link" data-scroll-target="#uncovering-simpsons-paradox">Uncovering Simpson’s Paradox</a></li>
   <li><a href="#the-body-condition-index" id="toc-the-body-condition-index" class="nav-link" data-scroll-target="#the-body-condition-index">The “Body Condition Index</a></li>
   </ul>
@@ -207,7 +210,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="load-palmerpenguins-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="load-palmerpenguins-dataset">Load Palmerpenguins dataset</h2>
-<p>Data: <a href="https://allisonhorst.github.io/palmerpenguins/">Palmer Penguins</a>, Palmer Station Antarctica LTER. ### About the data Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. The palmerpenguins package contains two datasets - <em>penguins</em> and <em>penguins_raw</em></p>
+<p>Data: <a href="https://allisonhorst.github.io/palmerpenguins/">Palmer Penguins</a>, Palmer Station Antarctica LTER.</p>
+<section id="about-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="about-the-data">About the data</h3>
+<p>Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. The palmerpenguins package contains two datasets - <em>penguins</em> and <em>penguins_raw</em></p>
 <div id="a48a424b-8272-4ee0-8a43-86e374f12ee7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the clean dataset</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> load_penguins().dropna()</span>
@@ -229,6 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5       3650.0    male  2007  </code></pre>
 </div>
 </div>
+</section>
 </section>
 <section id="uncovering-simpsons-paradox" class="level2">
 <h2 class="anchored" data-anchor-id="uncovering-simpsons-paradox">Uncovering Simpson’s Paradox</h2>
